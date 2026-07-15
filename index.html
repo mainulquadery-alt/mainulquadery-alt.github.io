@@ -1,1 +1,163 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Neon Arcade</title><style>* { box-sizing: border-box; margin: 0; padding: 0; }body { font-family: system-ui, -apple-system, sans-serif; color: var(--foreground); background: var(--background); min-height: 100vh; display:flex; flex-direction:column; align-items:center; gap:12px; padding:12px; }.titlebar { display:flex; align-items:center; gap:10px; width:100%; max-width:480px; }.logo { font-size:1.45rem; font-weight:800; letter-spacing:1px; background:linear-gradient(90deg,var(--primary),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; }.coin { margin-left:auto; font-weight:700; font-size:.85rem; background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 12px; color:var(--warning); }.snd { cursor:pointer; font-size:1.1rem; padding:4px 8px; border:1px solid var(--border); border-radius:8px; background:var(--card); }.tabs { display:flex; gap:6px; width:100%; max-width:480px; }.tab { flex:1; cursor:pointer; text-align:center; font-size:.82rem; font-weight:600; padding:9px 0; border-radius:var(--radius); border:1px solid var(--border); background:var(--card); color:var(--muted-foreground); transition:.15s; }.tab.active { background:var(--primary); color:var(--primary-foreground); border-color:var(--primary); }.screen { display:none; width:100%; max-width:480px; flex-direction:column; gap:12px; }.screen.active { display:flex; }.menu-sub { color:var(--muted-foreground); font-size:.82rem; text-align:center; margin-bottom:2px; }.game-card { display:flex; align-items:center; gap:14px; cursor:pointer; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; transition:.15s; }.game-card:hover { transform:translateY(-2px); border-color:var(--primary); box-shadow:0 6px 20px rgba(0,0,0,.18); }.gc-icon { width:50px; height:50px; border-radius:14px; flex:none; display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff; }.gc-body h3 { font-size:1.02rem; font-weight:700; } .gc-body p { font-size:.78rem; color:var(--muted-foreground); margin-top:2px; }.gc-arrow { margin-left:auto; color:var(--muted-foreground); font-size:1.2rem; }.hud { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:9px 14px; flex-wrap:wrap; }.hud .stat { font-size:.85rem; } .hud .stat b { color:var(--primary); }.btn { cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--foreground); border-radius:var(--radius); padding:7px 13px; font-size:.83rem; font-weight:600; transition:.15s; }.btn:hover { background:var(--muted); }.btn.primary { background:var(--primary); color:var(--primary-foreground); border-color:var(--primary); } .btn.primary:hover { filter:brightness(1.08); }.btn.danger { color:var(--destructive); }.spacer { margin-left:auto; }.canvas-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:10px; display:flex; justify-content:center; }canvas { display:block; border-radius:10px; max-width:100%; touch-action:none; }.overlay { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; border-radius:10px; background:rgba(0,0,0,.6); color:#fff; text-align:center; padding:20px; }.overlay h2 { font-size:1.35rem; font-weight:800; } .overlay p { font-size:.88rem; opacity:.92; }.rel { position:relative; }.hint { font-size:.76rem; color:var(--muted-foreground); text-align:center; }#g2048-board { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:10px; aspect-ratio:1; width:100%; }.cell { border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.35rem; background:var(--muted); color:var(--foreground); transition:transform .08s; }.cell.v2{background:#eee4da;color:#776e65}.cell.v4{background:#ede0c8;color:#776e65}.cell.v8{background:#f2b179;color:#fff}.cell.v16{background:#f59563;color:#fff}.cell.v32{background:#f67c5f;color:#fff}.cell.v64{background:#f65e3b;color:#fff}.cell.v128{background:#edcf72;color:#fff;font-size:1.1rem;box-shadow:0 0 14px rgba(237,207,114,.6)}.cell.v256{background:#edcc61;color:#fff;font-size:1.1rem;box-shadow:0 0 16px rgba(237,204,97,.7)}.cell.v512{background:#edc850;color:#fff;font-size:1.1rem;box-shadow:0 0 18px rgba(237,200,80,.8)}.cell.v1024{background:#edc53f;color:#fff;font-size:.95rem;box-shadow:0 0 22px rgba(237,197,63,.9)}.cell.v2048{background:#edc22e;color:#fff;font-size:.95rem;box-shadow:0 0 26px rgba(237,194,46,1)}#mem-board { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:100%; }.mcard { aspect-ratio:1; border-radius:12px; cursor:pointer; perspective:600px; }.mcard-inner { position:relative; width:100%; height:100%; transition:transform .3s; transform-style:preserve-3d; }.mcard.flip .mcard-inner { transform:rotateY(180deg); }.mface { position:absolute; inset:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; backface-visibility:hidden; }.mfront { background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; font-weight:800; } .mfront::after { content:"?"; }.mback { background:var(--card); border:1px solid var(--border); transform:rotateY(180deg); }.mcard.done .mback { border-color:var(--success); box-shadow:0 0 12px rgba(34,197,94,.45); }.add-row { display:flex; gap:8px; }.add-row input { flex:1; padding:9px 12px; border-radius:var(--radius); border:1px solid var(--border); background:var(--background); color:var(--foreground); font-size:.9rem; }.friend { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:11px 14px; margin-bottom:8px; }.avatar { width:42px; height:42px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:#fff; font-weight:700; }.dot { width:10px; height:10px; border-radius:50%; flex:none; margin-left:-8px; margin-top:26px; border:2px solid var(--card); }.dot.on { background:var(--success); } .dot.off { background:var(--muted-foreground); }.finfo { flex:1; } .finfo h4 { font-size:.92rem; font-weight:700; } .finfo p { font-size:.76rem; color:var(--muted-foreground); margin-top:1px; }.empty { text-align:center; color:var(--muted-foreground); font-size:.85rem; padding:30px 0; }.lb-row { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:10px 14px; margin-bottom:7px; }.lb-rank { width:26px; font-weight:800; color:var(--muted-foreground); text-align:center; } .lb-row.me { border-color:var(--primary); } .lb-row.me .lb-rank { color:var(--primary); }.lb-score { margin-left:auto; font-weight:700; color:var(--accent); } .lb-game { font-size:.72rem; color:var(--muted-foreground); margin-top:1px; }.challenge-bar { background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; border-radius:var(--radius); padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:.85rem; font-weight:600; }.pulse { width:8px; height:8px; border-radius:50%; background:#fff; animation:pulse 1s infinite; }@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }#chess-board { display:grid; grid-template-columns:repeat(8,1fr); width:100%; aspect-ratio:1; border-radius:10px; overflow:hidden; border:2px solid var(--border); }.sq { display:flex; align-items:center; justify-content:center; font-size:1.7rem; cursor:pointer; position:relative; user-select:none; }.sq.light { background:#f0d9b5; } .sq.dark { background:#b58863; } .sq.sel { box-shadow:inset 0 0 0 3px var(--primary); }.sq.hint::after { content:""; position:absolute; width:30%; height:30%; border-radius:50%; background:rgba(34,197,94,.5); }.sq.hint-c::after { content:""; position:absolute; inset:0; border:3px solid rgba(239,68,68,.6); } .sq.last { box-shadow:inset 0 0 0 2px rgba(250,204,21,.7); }.chess-side { display:flex; gap:6px; align-items:center; font-size:.85rem; font-weight:600; }#ttt-board { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; width:100%; aspect-ratio:1; max-width:340px; margin:0 auto; }.ttt-cell { background:var(--muted); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:2.8rem; font-weight:800; cursor:pointer; transition:.15s; user-select:none; }.ttt-cell.x { color:var(--primary); } .ttt-cell.o { color:var(--accent); } .ttt-cell:hover:not(.x):not(.o) { background:var(--border); }.footer { text-align:center; font-size:.72rem; color:var(--muted-foreground); padding:8px 0 2px; }.footer strong { color:var(--primary); }.new-badge { font-size:.6rem; background:var(--success); color:#fff; border-radius:5px; padding:2px 5px; font-weight:700; margin-left:6px; vertical-align:middle; }</style></head><body><div class="titlebar"><div class="logo">NEON ARCADE</div><div class="snd" id="snd-btn" onclick="toggleSound()" title="Toggle sound">🔊</div><div class="coin">⬢ <span id="coins">0</span></div></div><div class="tabs"><div class="tab active" onclick="goTab('games',this)">🎮 Games</div><div class="tab" onclick="goTab('friends',this)">👥 Friends</div><div class="tab" onclick="goTab('leaderboard',this)">🏆 Ranks</div></div><div id="tab-games" class="screen active"><div id="menu"><div class="menu-sub">8 games — score to earn ⬢ coins & climb the ranks</div><div style="text-align:center;font-size:.72rem;color:var(--muted-foreground);margin-bottom:6px">by <strong style="color:var(--primary)">Mainul Quadery</strong> 👑</div><div class="game-card" onclick="openGame('snake')"><div class="gc-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">🐍</div><div class="gc-body"><h3>Neon Snake</h3><p>Eat, grow, don't crash. Solo or vs a friend.</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('2048')"><div class="gc-icon" style="background:linear-gradient(135deg,#f59e0b,#edc22e)">🧩</div><div class="gc-body"><h3>2048</h3><p>Swipe to merge tiles. Reach 2048!</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('memory')"><div class="gc-icon" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">🃏</div><div class="gc-body"><h3>Memory Match</h3><p>Find all pairs — solo or race a friend.</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('football')"><div class="gc-icon" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)">⚽</div><div class="gc-body"><h3>Penalty Shootout</h3><p>Aim & shoot past the AI keeper. Best of 5!</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('chess')"><div class="gc-icon" style="background:linear-gradient(135deg,#64748b,#334155)">♞</div><div class="gc-body"><h3>Mini Chess</h3><p>Full chess vs AI. Checkmate to win!</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('breakout')"><div class="gc-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">🧱</div><div class="gc-body"><h3>Breakout <span class="new-badge">NEW</span></h3><p>Smash all bricks with your paddle & ball.</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('ttt')"><div class="gc-icon" style="background:linear-gradient(135deg,#14b8a6,#0d9488)">❌</div><div class="gc-body"><h3>Tic-Tac-Toe <span class="new-badge">NEW</span></h3><p>Classic 3-in-a-row vs unbeatable AI.</p></div><div class="gc-arrow">›</div></div><div class="game-card" onclick="openGame('flappy')"><div class="gc-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)">🐤</div><div class="gc-body"><h3>Flappy Bird <span class="new-badge">NEW</span></h3><p>Tap to fly through pipes. How far?</p></div><div class="gc-arrow">›</div></div></div></div><div id="tab-friends" class="screen"><div class="menu-sub">Add friends, then challenge them head-to-head. They play back as AI tuned to their skill.</div><div class="add-row"><input id="friend-input" placeholder="Add a friend by name…" onkeydown="if(event.key==='Enter')addFriend()"><button class="btn primary" onclick="addFriend()">Add</button></div><div id="friend-list"></div></div><div id="tab-leaderboard" class="screen"><div class="menu-sub">Global ranks across all 8 games. Beat your friends to climb!</div><div id="lb-list"></div><div class="footer">🎮 Neon Arcade — <strong>Made by Mainul Quadery</strong></div></div><div id="screen-snake" class="screen"><div id="snake-challenge"></div><div class="hud"><div class="stat">Score <b id="snake-score">0</b></div><div class="stat">Best <b id="snake-best">0</b></div><div class="spacer"></div><button class="btn" onclick="snakeReset()">↻ Restart</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><canvas id="snake-cv" width="420" height="420"></canvas><div class="overlay" id="snake-ov"><h2>Neon Snake</h2><p>Arrow keys / WASD or swipe to move.<br>Press <b>Space</b> or tap to start.</p><button class="btn primary" onclick="snakeStart()">Start Game</button></div></div><div class="hint">Arrows / WASD or swipe · Space to pause</div></div><div id="screen-2048" class="screen"><div id="g2048-challenge"></div><div class="hud"><div class="stat">Score <b id="g2048-score">0</b></div><div class="stat">Best <b id="g2048-best">0</b></div><div class="spacer"></div><button class="btn" onclick="g2048Reset()">↻ New</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><div id="g2048-board"></div><div class="overlay" id="g2048-ov" style="display:none"><h2 id="g2048-ov-title">Game Over</h2><p id="g2048-ov-text"></p><button class="btn primary" onclick="g2048Reset()">Play Again</button></div></div><div class="hint">Arrow keys / WASD or swipe to merge tiles</div></div><div id="screen-memory" class="screen"><div id="mem-challenge"></div><div class="hud"><div class="stat">Moves <b id="mem-moves">0</b></div><div class="stat">Pairs <b id="mem-pairs">0/8</b></div><div class="spacer"></div><button class="btn" onclick="memReset()">↻ Shuffle</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><div id="mem-board"></div></div><div class="hint">Tap cards to flip · find all 8 matching pairs</div><div class="footer">🎮 Neon Arcade — <strong>Made by Mainul Quadery</strong></div></div><div id="screen-football" class="screen"><div id="football-challenge"></div><div class="hud"><div class="stat">You <b id="fb-you">0</b></div><div class="stat">AI <b id="fb-ai">0</b></div><div class="stat" id="fb-phase">Round 1/5</div><div class="spacer"></div><button class="btn" onclick="fbReset()">↻ Restart</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><canvas id="fb-cv" width="420" height="300"></canvas><div class="overlay" id="fb-ov"><h2>⚽ Penalty Shootout</h2><p>Click/tap in the goal to aim your shot.<br>Then defend — click to dive!</p><button class="btn primary" onclick="fbStart()">Kick Off</button></div></div><div class="hint">Click in the goal to shoot · click to dive as keeper</div></div><div id="screen-chess" class="screen"><div id="chess-challenge"></div><div class="hud"><div class="chess-side" id="chess-turn">Your turn (White)</div><div class="spacer"></div><button class="btn" onclick="chessReset()">↻ New</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><div id="chess-board"></div><div class="overlay" id="chess-ov" style="display:none"><h2 id="chess-ov-title">Game Over</h2><p id="chess-ov-text"></p><button class="btn primary" onclick="chessReset()">New Game</button></div></div><div class="hint">Click a piece to select · click a square to move · you play White</div></div><div id="screen-breakout" class="screen"><div id="breakout-challenge"></div><div class="hud"><div class="stat">Score <b id="bo-score">0</b></div><div class="stat">Lives <b id="bo-lives">3</b></div><div class="spacer"></div><button class="btn" onclick="boReset()">↻ Restart</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><canvas id="bo-cv" width="420" height="420"></canvas><div class="overlay" id="bo-ov"><h2>🧱 Breakout</h2><p>Move the paddle with mouse, finger, or arrow keys.<br>Break every brick!</p><button class="btn primary" onclick="boStart()">Start</button></div></div><div class="hint">Move paddle with mouse/finger or ← → keys</div></div><div id="screen-ttt" class="screen"><div id="ttt-challenge"></div><div class="hud"><div class="stat">You <b id="ttt-you">0</b></div><div class="stat">AI <b id="ttt-ai">0</b></div><div class="stat">Draws <b id="ttt-draw">0</b></div><div class="spacer"></div><button class="btn" onclick="tttReset()">↻ New</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><div id="ttt-board"></div><div class="overlay" id="ttt-ov" style="display:none"><h2 id="ttt-ov-title">Game Over</h2><p id="ttt-ov-text"></p><button class="btn primary" onclick="tttReset()">Play Again</button></div></div><div class="hint">Click a square to place your ❌ · AI plays ⭕</div></div><div id="screen-flappy" class="screen"><div id="flappy-challenge"></div><div class="hud"><div class="stat">Score <b id="fl-score">0</b></div><div class="stat">Best <b id="fl-best">0</b></div><div class="spacer"></div><button class="btn" onclick="flReset()">↻ Restart</button><button class="btn" onclick="backToMenu()">← Menu</button></div><div class="canvas-wrap rel"><canvas id="fl-cv" width="420" height="420"></canvas><div class="overlay" id="fl-ov"><h2>🐤 Flappy Bird</h2><p>Tap, click, or press Space to flap.<br>Avoid the pipes!</p><button class="btn primary" onclick="flStart()">Start</button></div></div><div class="hint">Tap / click / Space to flap · don't hit the pipes</div></div><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neon Arcade</title>
+<style>
+  :root{
+    --neon-cyan:#00f0ff; --neon-magenta:#ff2bd6; --neon-purple:#a855f7;
+    --neon-green:#00ff9d; --neon-yellow:#ffe600; --neon-orange:#ff7a18;
+    --bg:#070712; --panel:#0f0f24; --panel2:#15152e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:#e8e8ff;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%,rgba(168,85,247,.12),transparent 40%),
+      radial-gradient(circle at 80% 80%,rgba(0,240,255,.10),transparent 40%),
+      linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+    background-size:100% 100%,100% 100%,40px 40px,40px 40px;
+    min-height:100vh;
+  }
+  .glow-text{text-shadow:0 0 8px currentColor,0 0 20px currentColor}
+  .neon-border{border:1px solid var(--neon-cyan);box-shadow:0 0 12px rgba(0,240,255,.4),inset 0 0 12px rgba(0,240,255,.08)}
+  #app{max-width:980px;margin:0 auto;padding:16px}
+
+  /* Top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .logo-badge{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+    background:linear-gradient(135deg,var(--neon-purple),var(--neon-magenta));
+    box-shadow:0 0 18px rgba(255,43,214,.5)}
+  .logo h1{font-size:1.5rem;font-weight:800;letter-spacing:1px;
+    background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .topbar-right{display:flex;align-items:center;gap:8px}
+  .pill{padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:700;border:1px solid var(--panel2);background:var(--panel);color:#aab}
+  .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--panel2);background:var(--panel);color:#aab;
+    cursor:pointer;font-size:18px;display:grid;place-items:center;transition:.2s}
+  .icon-btn:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);box-shadow:0 0 12px rgba(0,240,255,.3)}
+  .back-btn{display:none;align-items:center;gap:6px}
+
+  /* Home */
+  .hero{text-align:center;margin-bottom:20px}
+  .hero h2{font-size:1.7rem;font-weight:800;letter-spacing:.5px;margin-bottom:4px;
+    background:linear-gradient(90deg,var(--neon-cyan),var(--neon-green),var(--neon-magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:#889;font-size:.85rem}
+  .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .game-card{position:relative;border-radius:16px;padding:22px 16px;cursor:pointer;overflow:hidden;
+    background:var(--panel);border:1px solid var(--panel2);transition:.25s;text-align:center}
+  .game-card::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s;
+    background:radial-gradient(circle at 50% 0%,var(--card-glow,rgba(0,240,255,.25)),transparent 70%)}
+  .game-card:hover{transform:translateY(-4px);border-color:var(--card-color,var(--neon-cyan));
+    box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 20px var(--card-glow,rgba(0,240,255,.3))}
+  .game-card:hover::before{opacity:1}
+  .card-icon{font-size:2.6rem;margin-bottom:10px;display:block;filter:drop-shadow(0 0 8px var(--card-glow,rgba(0,240,255,.5)))}
+  .card-name{font-weight:800;font-size:.95rem;margin-bottom:3px}
+  .card-tag{font-size:.68rem;color:#778;text-transform:uppercase;letter-spacing:1px}
+  .card-best{position:absolute;top:10px;right:10px;font-size:.62rem;font-weight:700;color:var(--card-color,var(--neon-cyan));
+    background:rgba(0,0,0,.3);padding:2px 7px;border-radius:8px;display:none}
+  .card-badge{position:absolute;top:10px;left:10px;font-size:.58rem;font-weight:800;color:#000;
+    background:var(--neon-yellow);padding:2px 6px;border-radius:6px;letter-spacing:.5px;display:none}
+
+  /* Game screen */
+  #game-screen{display:none}
+  .game-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .game-title{font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:8px}
+  .game-stats{display:flex;gap:10px;flex-wrap:wrap}
+  .stat{background:var(--panel);border:1px solid var(--panel2);border-radius:10px;padding:6px 14px;text-align:center}
+  .stat-label{font-size:.6rem;color:#778;text-transform:uppercase;letter-spacing:1px}
+  .stat-val{font-size:1.15rem;font-weight:800;color:var(--neon-cyan)}
+  .game-body{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .game-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .btn{padding:9px 22px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:.85rem;transition:.2s;color:#fff}
+  .btn-primary{background:linear-gradient(90deg,var(--neon-purple),var(--neon-magenta));box-shadow:0 0 14px rgba(168,85,247,.4)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 22px rgba(168,85,247,.6)}
+  .btn-ghost{background:var(--panel);border:1px solid var(--panel2);color:#aab}
+  .btn-ghost:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+  .hint{font-size:.75rem;color:#778;text-align:center}
+
+  canvas{display:block;border-radius:14px;background:#0a0a18;box-shadow:0 0 25px rgba(0,240,255,.15)}
+  .game-overlay{position:relative}
+
+  /* 2048 & memory & ttt */
+  .grid-2048{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;background:#0a0a18;border-radius:14px;
+    width:440px;aspect-ratio:1;box-shadow:0 0 25px rgba(0,240,255,.15)}
+  .tile-2048{display:grid;place-items:center;border-radius:8px;font-weight:800;font-size:1.4rem;transition:.1s;color:#fff}
+  .ttt-board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:400px;aspect-ratio:1;background:#0a0a18;
+    padding:6px;border-radius:14px;box-shadow:0 0 25px rgba(0,240,255,.15)}
+  .ttt-cell{background:var(--panel);border-radius:8px;display:grid;place-items:center;font-size:2.2rem;font-weight:800;
+    cursor:pointer;transition:.15s;border:1px solid var(--panel2)}
+  .ttt-cell:hover{border-color:var(--neon-cyan)}
+  .ttt-cell.x{color:var(--neon-cyan);text-shadow:0 0 12px var(--neon-cyan)}
+  .ttt-cell.o{color:var(--neon-magenta);text-shadow:0 0 12px var(--neon-magenta)}
+  .mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:440px}
+  .mem-card{aspect-ratio:1;border-radius:10px;cursor:pointer;position:relative;perspective:600px;transition:.3s}
+  .mem-inner{position:absolute;inset:0;transition:transform .4s;transform-style:preserve-3d}
+  .mem-card.flipped .mem-inner{transform:rotateY(180deg)}
+  .mem-face{position:absolute;inset:0;border-radius:10px;display:grid;place-items:center;backface-visibility:hidden;font-size:1.8rem}
+  .mem-front{background:linear-gradient(135deg,var(--neon-purple),#2a1a4a);border:1px solid var(--neon-purple)}
+  .mem-front::after{content:"?";font-size:1.4rem;color:rgba(255,255,255,.4)}
+  .mem-back{background:var(--panel);border:1px solid var(--neon-cyan);transform:rotateY(180deg);
+    box-shadow:inset 0 0 12px rgba(0,240,255,.1)}
+
+  .reaction-area{width:440px;height:340px;border-radius:16px;display:grid;place-items:center;cursor:pointer;
+    font-size:1.3rem;font-weight:800;text-align:center;transition:background .1s;border:2px solid var(--panel2)}
+
+  .leaderboard{margin-top:18px;background:var(--panel);border:1px solid var(--panel2);border-radius:14px;padding:16px}
+  .leaderboard h3{font-size:.9rem;margin-bottom:10px;color:#aab;display:flex;align-items:center;gap:6px}
+  .lb-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem}
+  .lb-row:last-child{border-bottom:none}
+  .lb-game{color:#ccd} .lb-score{font-weight:800;color:var(--neon-green)}
+
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--panel);
+    border:1px solid var(--neon-cyan);border-radius:10px;padding:10px 20px;font-size:.85rem;font-weight:700;
+    box-shadow:0 0 20px rgba(0,240,255,.4);transition:.3s;opacity:0;z-index:999;pointer-events:none}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .footer{text-align:center;color:#556;font-size:.72rem;margin-top:20px;padding:10px}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="logo" onclick="Arcade.goHome()">
+      <div class="logo-badge">🕹️</div>
+      <h1>NEON ARCADE</h1>
+    </div>
+    <div class="topbar-right">
+      <span class="pill" id="total-games">8 Games</span>
+      <button class="icon-btn back-btn" id="back-btn" onclick="Arcade.goHome()">←</button>
+      <button class="icon-btn" id="sound-btn" onclick="Arcade.toggleSound()" title="Sound">🔊</button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="home-screen">
+    <div class="hero">
+      <h2>Welcome back, Player</h2>
+      <p>Pick a game · beat your best · climb the leaderboard</p>
+    </div>
+    <div class="game-grid" id="game-grid"></div>
+    <div class="leaderboard" id="leaderboard"></div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game-screen">
+    <div class="game-header">
+      <div class="game-title" id="game-title">🎮 Game</div>
+      <div class="game-stats" id="game-stats"></div>
+    </div>
+    <div class="game-body" id="game-body"></div>
+    <div class="game-controls" id="game-controls" style="margin-top:14px"></div>
+  </div>
+
+  <div class="footer">Neon Arcade · built by Mainul Quadery · v2.0</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
